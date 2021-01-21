@@ -68,7 +68,7 @@ const CarCompra = (props) =>{
     const [CEPEndereco, setCEPEndereco] = useState('');
     const [stLoading, setStLoading] = useState(true);
     const [activeAgendamento, setactiveAgendamento] = useState(false);
-    const [activeButton, setactiveButton] = useState('Entrega');
+    const [activeButton, setactiveButton] = useState('Retirada');
 
     const [modalTitle, setModalTitle] = useState('digite seu endereco');
     const [modalVisible, setModalVisible] = useState(false);
@@ -227,7 +227,7 @@ const CarCompra = (props) =>{
             <ScrolArea>
                 <HeaderArea>
                     <HeaderForma>
-                        <HeaderEntrega active={activeButton == 'Entrega'} onPress={() => setactiveButton('Entrega')} underlayColor="transparent">
+                        <HeaderEntrega active={activeButton == 'Entrega'} onPress={() => setactiveButton('Retirada')} underlayColor="transparent">
                             <HeaderTitle active={activeButton == 'Entrega'}>Entrega</HeaderTitle>
                         </HeaderEntrega>
                         <HeaderRetirada active={activeButton == 'Retirada'} onPress={() =>setactiveButton('Retirada')} underlayColor="transparent">

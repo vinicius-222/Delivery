@@ -55,7 +55,7 @@ const apiFetchPost = async (endpoint, body, props) => {
         let jwt = AsyncStorage.getItem('jwt');
         if(jwt) {
             body.jwt = jwt;
-        }
+        }h9nvtd
     }
 
     if (body.hash){
@@ -64,8 +64,9 @@ const apiFetchPost = async (endpoint, body, props) => {
             body.hash = hash;
         }
     }*/
-
-    const res = await fetch(BASEAPI+endpoint, {
+    //console.log(body);
+    console.log(body);
+    const res = await fetch(BASEAPI+endpoint, { 
         method:'POST',
         headers:{
             'Accept':'application/json',
@@ -74,6 +75,7 @@ const apiFetchPost = async (endpoint, body, props) => {
         body:JSON.stringify(body)
     });
     const json = await res.json();
+
     if (json.error){
         props.navigation.dispatch(StackActions.reset({
             index:0,

@@ -36,11 +36,12 @@ const Pagamento = (props) =>{
     }
 
     const handleEnviar = async () => {
-        let Itens = {'itensPedido':props.ListCarCompra};
+        let Itens = props.ListCarCompra;
         let IdPedidoDeVenda = await Api.getCode(
             'PedidoDeVenda',
             'IdPedidoDeVenda'
         );
+
         const json = await Api.sendPedidoDeVenda(
             IdPedidoDeVenda,
             2,
@@ -55,7 +56,7 @@ const Pagamento = (props) =>{
             "",
             props.jwt,
         )
-        
+    
         if (!json.error){
             props.setcarCompra([]);
             
@@ -84,7 +85,12 @@ const Pagamento = (props) =>{
         getFormadePagamento();
         let arr = props.MeusEnderecos;
         let i = arr.findIndex((e)=> e.StEntrega == 1);
-        setVlEntrega(arr[i].Valor);
+        if (props.TpEntrega === 'Entrega' ){
+            setVlEntrega(arr[i].Valor);
+        }else{
+            setVlEntrega(0);
+        }
+        
 
     },[])
     return(
@@ -161,6 +167,7 @@ const mapStateToProps = (state) => {
         VlTotalProduto:state.carReducer.VlTotalProduto,
         ListFormaDePagamento:state.carReducer.ListFormaDePagamento,
         MeusEnderecos:state.enderecoReducer.MeusEnderecos,
+        TpEntrega:state.carReducer.TpEntrega
 
     }
 }
