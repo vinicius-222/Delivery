@@ -8,15 +8,10 @@ import {
 
 const Camera = (props) => {
 
-    const [Album, setAlbum] = useState({});
+    const [Album, setAlbum] = useState([]);
     const getfoto = () => {
         CameraRoll.getPhotos({
-
-        })
-        .then((r)=>{
-            setAlbum(r.edges)
-        }).catch((e)=>{
-            alert(e);
+            
         })
     }
 
