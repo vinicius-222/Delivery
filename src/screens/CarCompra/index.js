@@ -56,7 +56,11 @@ import {
     AreaSangriaAgendamento,
     HeaderEnderecoBalon,
     HeaderEnderecoBalonTriangle,
-    HeaderEnderecoBalonTriangleText
+    HeaderEnderecoBalonTriangleText,
+    BottonCamera,
+    ImageCamera,
+    AreaCamera,
+    TextCamera
 } from './styled';
 import { months } from 'moment';
 
@@ -332,6 +336,12 @@ const CarCompra = (props) =>{
                         </BodyArea>
                     </Container>
                 ))}
+                <AreaCamera>
+                    <BottonCamera underlayColor='#CCCCCC' onPress={()=>props.navigation.navigate('Camera')}>
+                        <ImageCamera source={require('../../assets/images/apple-camera.png')}/>
+                    </BottonCamera>
+                    <TextCamera>Enviar Foto</TextCamera>
+                </AreaCamera>
                 <BottomActionContinuar onPress={()=>{
                     if (!props.visibleBalon){
                         props.navigation.navigate('Pagamento');   

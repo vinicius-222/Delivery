@@ -1,3 +1,4 @@
+import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 import styled from 'styled-components/native';
 
 export const Safe = styled.SafeAreaView`
@@ -244,4 +245,27 @@ export const StAgendamento =  styled.Switch`
 export const AreaSangriaAgendamento = styled.View`
     height:15px;
     width:40px;
+`;
+export const AreaCamera = styled.View`
+    width:100%;
+    height:60px;
+    margin-top:10px;
+    justify-content:center;
+    align-items:center;
+`;
+
+export const BottonCamera = styled.TouchableHighlight`
+    width:50px;
+    height:50px;
+`;
+
+export const ImageCamera = styled.Image`
+    width:50px;
+    height:50px;
+
+`;
+
+export const TextCamera = styled.Text`
+    color:#999;
+    font-size:14px;
 `;

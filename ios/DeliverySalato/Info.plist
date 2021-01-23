@@ -25,6 +25,10 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Adicionar photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Encontrar photos</string>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
