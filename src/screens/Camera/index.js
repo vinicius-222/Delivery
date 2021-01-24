@@ -9,16 +9,24 @@ import {
 const Camera = (props) => {
 
     const [Album, setAlbum] = useState([]);
+    
     const getfoto = () => {
-        CameraRoll.getPhotos({
-            
+        CameraRoll.getAlbums({
+            first:20,
+            assetType:'Photos'
+        }).then((r)=>{
+            setAlbum(r.edges);
+        }).catch((e)=>{
+            alert(e);
         })
     }
 
 
     return(
         <Area>
-            <Button onPress={()=>getfoto()}>
+            <Button onPress={()=>{
+                getfoto();
+            }}>
                 <Text>Foto</Text>
             </Button>
         </Area>
@@ -33,3 +41,8 @@ Camera.navigationOptions = ({navigation}) =>{
 }
 
 export default Camera;
+
+//<key>NSPhotoLibraryAddUsageDescription</key>
+//	<string>Adicionar photos</string>
+//	<key>NSPhotoLibraryUsageDescription</key>
+//	<string>Encontrar photos</string>
