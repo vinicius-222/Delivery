@@ -22,13 +22,17 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app requires access to the photo library.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to the photo library.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app does not require access to the microphone.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to the camera.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Adicionar photos</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Encontrar photos</string>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>

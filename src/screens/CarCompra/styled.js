@@ -250,13 +250,16 @@ export const AreaCamera = styled.View`
     width:100%;
     height:60px;
     margin-top:10px;
-    justify-content:center;
+    justify-content:space-between;
     align-items:center;
+    flex-direction:row;
+
 `;
 
 export const BottonCamera = styled.TouchableHighlight`
     width:50px;
     height:50px;
+    border-radius:6px;
 `;
 
 export const ImageCamera = styled.Image`
@@ -268,4 +271,30 @@ export const ImageCamera = styled.Image`
 export const TextCamera = styled.Text`
     color:#999;
     font-size:14px;
+    text-align:center;
+`;
+
+export const AreaPhoto = styled.View`
+    width:100%;
+    justify-content:center;
+    align-items:center;
+    height:300px;
+    margin-top:15px;
+`;
+
+export const ImageProduto = styled.Image`
+    width:300px;
+    height:300px;
+    border-radius:5px;
+`;
+
+export const ButtonDelImage = styled.TouchableHighlight`
+    width:20px;
+    height:20px;
+    margin-right:15px;
+`;
+
+export const ButtonTrashImage = styled.Image`
+    width:20px;
+    height:20px;  
 `;

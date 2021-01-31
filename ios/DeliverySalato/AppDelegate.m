@@ -15,7 +15,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [GMSServices provideAPIKey:@"AIzaSyD8h4bKE1ICGQQqjHJ_3rtqlDoein72X0Y"];
+  [GMSServices provideAPIKey:@"AIzaSyAOxy6ZrHbd_qjeBrrxNapfdD8CSJHeYXM"];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"DeliverySalato"

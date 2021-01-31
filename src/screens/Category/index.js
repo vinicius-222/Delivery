@@ -20,7 +20,7 @@ const Category = (props) =>{
     const [activeCategoria, setActiveCategoria] = useState('Mini-fritos');
     const [listCategoria, setListCategoria] = useState([]);
 
-    const[ProductsInfo, setProductsInfo] = useState([])
+    const [ProductsInfo, setProductsInfo] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
     const HandleProdutos = (i) => {
@@ -28,9 +28,15 @@ const Category = (props) =>{
         props.navigation.navigate('Search',{DsGrupoProduto:i.DsGrupoProduto, IdGrupoProduto:i.IdGrupoProduto});
     }
 
+    const getSubCategoria = async () => {
+        let json = await api.getCategoria(props.jwt, props.hash, 0, 1);
+        props.setListaSubCategoria(json.GrupoProduto);
+    }
+
     useEffect(() =>{
         setProductsInfo(props.ListProductsCategory);
         setListCategoria(props.ListCategory);
+        getSubCategoria();
     },[])
 
     return(
@@ -48,6 +54,14 @@ const Category = (props) =>{
                                 </HeaderCategoriaAction>
                             </HeaderCategoriaArea>
                         ))}
+                        <HeaderCategoriaArea>
+                            <HeaderCategoriaAction onPress={()=>HandleProdutos(i)} underlayColor="transparent">
+                                <HeaderCategoriaItem >
+                                    <HeaderCategoriaImage source={{uri:BASE+'/Categoria/Tortas75b740b36c72dc934cb5b6674143ea2d.jpg'}} />
+                                    <HeaderCategoriaDesc>Bolos Personalizados</HeaderCategoriaDesc>
+                                </HeaderCategoriaItem>
+                            </HeaderCategoriaAction>
+                        </HeaderCategoriaArea>
                     </HeaderCategoria>
                 </HeaderArea>
             </ScrollArea>
@@ -83,6 +97,7 @@ const mapDispatchToProps = (dispatch) =>{
         setClearJwt:(jwt)=>dispatch({type:'SET_JWT', payload:{jwt}}),
         setEndereco:(Endereco)=>dispatch({type:'SET_ENDERECO', payload:{Endereco}}),
         setIdCategoria:(IdCategoria)=>dispatch({type:'SET_IDCATEGORIA', payload:{IdCategoria}}),
+        setListaSubCategoria:(ListaSubCategoria)=>dispatch({type:'SET_LISTSUBCATEGORY', payload:{ListaSubCategoria}})
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Category);

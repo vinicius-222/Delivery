@@ -16,8 +16,10 @@ const initialState = {
     ListFormaDePagamento:[],
     ListProductsCategory:[],
     ListCategory:[],
+    ListaSubCategoria:[],
     NmCategoria:'',
-    IdCategoria:0
+    IdCategoria:0,
+    ImageProduto:null,
 };
 
 export default (state = initialState, action) => {
@@ -100,11 +102,17 @@ export default (state = initialState, action) => {
         case 'SET_LISTCATEGORY':
             return { ...state, ListCategory:action.payload.ListCategory};
             break;
+        case 'SET_LISTSUBCATEGORY':
+            return { ...state, ListaSubCategoria:action.payload.ListaSubCategoria};
+            break;
         case 'SET_NMCATEGORIA':
             return { ...state, NmCategoria:action.payload.NmCategoria};
             break;
         case 'SET_IDCATEGORIA':
             return { ...state, IdCategoria:action.payload.IdCategoria};
+            break;
+        case 'SET_IMAGEPRODUTO':
+            return { ...state, ImageProduto:action.payload.ImageProduto};
             break;
     }
 

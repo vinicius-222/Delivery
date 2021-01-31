@@ -56,7 +56,8 @@ const Pagamento = (props) =>{
             "",
             props.jwt,
         )
-    
+            
+        
         if (!json.error){
             props.setcarCompra([]);
             

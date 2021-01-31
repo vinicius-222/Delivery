@@ -84,7 +84,7 @@ const Home = (props) =>{
     }     
 
     const handleGetCategoria = async () => {
-        const r = await api.getCategoria(props.jwt, props.hash);
+        const r = await api.getCategoria(props.jwt, props.hash, 1, 0);
         props.setListCategory(r.GrupoProduto);
     }
 

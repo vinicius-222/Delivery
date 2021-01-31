@@ -226,6 +226,7 @@ const AddressModal = (props) => {
         setStUsarGeoLocation(true);
         setModalInsertVisible(true);
         setLocationActual(props.GeoEndereco);
+        console.log(LocationActual);
     }
 
     const DeleteEndereco = (k) =>{

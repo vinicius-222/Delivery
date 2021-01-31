@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import Loading from '../../components/Loading';
 import BalonCaution from '../../components/BalonCaution';
@@ -7,7 +7,7 @@ import AddressModal from '../../components/Address/AddressModal';
 import { parseISO, format, formatRelative, formatDistance , parse} from 'date-fns';
 import localeBR from 'date-fns/locale/en-CA';
   
-import useSalatoDeliveryAPI, { BASEAPIIMAGE } from '../../useSalatoDeliveryAPI';
+import useSalatoDeliveryAPI, { BASEAPIIMAGE, BASEAPI } from '../../useSalatoDeliveryAPI';
 import {
     Safe,
     Container,
@@ -60,19 +60,25 @@ import {
     BottonCamera,
     ImageCamera,
     AreaCamera,
-    TextCamera
+    TextCamera,
+    AreaPhoto,
+    ImageProduto,
+    ButtonDelImage,
+    ButtonTrashImage
 } from './styled';
 import { months } from 'moment';
 
 let Timer;
 const CarCompra = (props) =>{
     const api = useSalatoDeliveryAPI(props);
+    const IMG = useRef();
     const [VlTotalProdutos, setVlTotalProdutos] = useState(0);
     const [DescEndereco, setDescEndereco] = useState('');
     const [CEPEndereco, setCEPEndereco] = useState('');
     const [stLoading, setStLoading] = useState(true);
     const [activeAgendamento, setactiveAgendamento] = useState(false);
-    const [activeButton, setactiveButton] = useState('Retirada');
+    const [activeButton, setactiveButton] = useState('Entrega');
+    const [urlImage, setUrlImage] = useState('');
 
     const [modalTitle, setModalTitle] = useState('digite seu endereco');
     const [modalVisible, setModalVisible] = useState(false);
@@ -105,6 +111,7 @@ const CarCompra = (props) =>{
         if (!json.error){
             props.setListFormaDePagamento(json.FormaPagamento);
         }
+        console.log(props.ListCarCompra)
     }
 
     const DeleteItem = (i,k) =>{
@@ -121,7 +128,7 @@ const CarCompra = (props) =>{
             "key":k
         });
         UpdateCart();
-        UpdateCarCompra(i.IdProduto, parseFloat(i.QtPedida));
+        UpdateCarCompra(i.IdProduto, parseFloat(i.QtPedida), urlImage );
     }
 
     const DecCartQT = (i,k) => {
@@ -181,21 +188,44 @@ const CarCompra = (props) =>{
         return json;
     }
 
-    const UpdateCarCompra = async (tIdProduto, tQtProduto) => {
-    
+    const UpdateCarCompra = async (tIdProduto, tQtProduto, urlImageProduto) => {
+
         const json = await api.updateCarCompra(
             props.jwt,
             props.hash,
             tIdProduto,  
-            tQtProduto
+            tQtProduto,
+            urlImageProduto
         );
+
+        console.log(json);
         return json;
+    }
+
+    const AdPhoto = async () =>{
+        const json = await api.addPhoto(
+            props.jwt,
+            props.hash,
+            props.ImageProduto.uri,
+            props.ImageProduto.filename,
+            props.ImageProduto.type
+        )
+
+        setUrlImage(BASEAPI+'Images/'+json.retorno)
+
     }
     
     useEffect(()=>{
         UpdateCart();
         setStLoading(false);
     },[props.ListCarCompra]);
+
+    useEffect(() => {
+
+        if (props.ImageProduto != null){
+            AdPhoto();
+        }
+    },[props.ImageProduto])
 
     useEffect(() =>{
         if (Timer){
@@ -231,7 +261,7 @@ const CarCompra = (props) =>{
             <ScrolArea>
                 <HeaderArea>
                     <HeaderForma>
-                        <HeaderEntrega active={activeButton == 'Entrega'} onPress={() => setactiveButton('Retirada')} underlayColor="transparent">
+                        <HeaderEntrega active={activeButton == 'Entrega'} onPress={() => setactiveButton('Entrega')} underlayColor="transparent">
                             <HeaderTitle active={activeButton == 'Entrega'}>Entrega</HeaderTitle>
                         </HeaderEntrega>
                         <HeaderRetirada active={activeButton == 'Retirada'} onPress={() =>setactiveButton('Retirada')} underlayColor="transparent">
@@ -337,11 +367,26 @@ const CarCompra = (props) =>{
                     </Container>
                 ))}
                 <AreaCamera>
+                    <ButtonDelImage>
+                        <ButtonTrashImage />
+                    </ButtonDelImage>
                     <BottonCamera underlayColor='#CCCCCC' onPress={()=>props.navigation.navigate('Camera')}>
-                        <ImageCamera source={require('../../assets/images/apple-camera.png')}/>
+                        <>
+                            <ImageCamera source={require('../../assets/images/apple-camera.png')}/>
+                            <TextCamera>Foto</TextCamera>
+                        </>
                     </BottonCamera>
-                    <TextCamera>Enviar Foto</TextCamera>
+                    {props.ImageProduto ? 
+                        <ButtonDelImage onPress={()=>props.setImageProduto('')}>
+                                <ButtonTrashImage source={require('../../assets/images/trash.png')}/>
+                        </ButtonDelImage>
+                    :<ButtonTrashImage />}
                 </AreaCamera>
+                {props.ImageProduto ? 
+                    <AreaPhoto>
+                        <ImageProduto ref={IMG} source={{uri:urlImage}}/>
+                    </AreaPhoto>
+                : <></>}
                 <BottomActionContinuar onPress={()=>{
                     if (!props.visibleBalon){
                         props.navigation.navigate('Pagamento');   
@@ -378,7 +423,8 @@ const mapStateToProps = (state) => {
         NmCategoria:state.carReducer.NmCategoria,
         IdCategoria:state.carReducer.IdCategoria,
         EnderecoAtivo:state.enderecoReducer.EnderecoAtivo,
-        visibleBalon:state.enderecoReducer.visibleBalon
+        visibleBalon:state.enderecoReducer.visibleBalon,
+        ImageProduto:state.carReducer.ImageProduto
     }
 }
 const mapDispatchToProps = (dispatch) =>{
@@ -393,7 +439,8 @@ const mapDispatchToProps = (dispatch) =>{
         setTpEntrega:(TpEntrega)=>dispatch({type:'SET_TPENTREGA', payload:{TpEntrega}}),
         setVlTotalProduto:(VlTotalProduto)=>dispatch({type:'SET_VLTOTALPRODUTOS', payload:{VlTotalProduto}}),
         setListFormaDePagamento:(ListFormaDePagamento)=>dispatch({type:'SET_LISTFORMADEPAGAMENTO', payload:{ListFormaDePagamento}}),
-        setVisibleBalon:(visibleBalon)=>dispatch({type:'SET_VISIBLEBALON', payload:{visibleBalon}})
+        setVisibleBalon:(visibleBalon)=>dispatch({type:'SET_VISIBLEBALON', payload:{visibleBalon}}),
+        setImageProduto:(ImageProduto)=>dispatch({type:'SET_IMAGEPRODUTO', payload:{ImageProduto}})
 
     }
 }

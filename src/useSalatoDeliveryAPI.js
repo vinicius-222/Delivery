@@ -7,10 +7,10 @@ import { MapsAPI } from './config';
 
 //const URL = 'http://192.168.1.65';
 const URL = 'http://138.99.15.234:20003';
-const BASEAPI = URL+'/backEndSalato/';
+export const BASEAPI = URL+'/backEndSalato/';
 export const BASEAPIIMAGE = URL+'/images/';
 
-const apiFetchFile = async (endpoint, body) => {
+const apiFetchFile = async (endpoint, jwt, hash, uri, filename, type) => {
     /*if (body.jwt){
         let jwt = AsyncStorage.getItem('jwt');
         if(jwt) {
@@ -24,29 +24,25 @@ const apiFetchFile = async (endpoint, body) => {
             body.hash = hash;
         }
     }*/
+    let formData = new FormData();
+    formData.append('photo', {
+        uri: uri,
+        type: type,
+        name: filename
+    });
+    formData.append('jwt', jwt);
+    formData.append('hash', hash);
 
     const res = await fetch(BASEAPI+endpoint, {
         method:'POST',
-        body
+        headers:{
+            'Content-Type':'multipart/form-data',
+            'Autorization':`Bearer ${jwt}`
+        },
+        body: formData
     });
     const json = await res.json();
 
-    if (json.error){
-        props.navigation.dispatch(StackActions.reset({
-            index:0,
-            actions:[
-                NavigationActions.navigate({routeName:'Login'})
-            ]
-        })); 
-        return (dispatch) =>{
-            dispatch({
-                type:'SET_JWT',
-                    payload:{
-                        jwt:''
-                    }
-            });
-        }
-    }
     return json;
 }
 const apiFetchPost = async (endpoint, body, props) => {
@@ -55,7 +51,7 @@ const apiFetchPost = async (endpoint, body, props) => {
         let jwt = AsyncStorage.getItem('jwt');
         if(jwt) {
             body.jwt = jwt;
-        }h9nvtd
+        }h9nvtd   9a97uj
     }
 
     if (body.hash){
@@ -65,7 +61,6 @@ const apiFetchPost = async (endpoint, body, props) => {
         }
     }*/
     //console.log(body);
-    console.log(body);
     const res = await fetch(BASEAPI+endpoint, { 
         method:'POST',
         headers:{
@@ -302,10 +297,10 @@ const useSalatoDeliveryAPI = (props) => ({
         }); 
     },
 
-    getCategoria:async (jwt, hash)=>{
+    getCategoria:async (jwt, hash, StSite, StPersonalizado)=>{
         const json = await apiFetchGet(
             '/pedidos/getGrupoProduto',
-            {jwt, hash}
+            {jwt, hash, StSite, StPersonalizado}
         )
         return json;
     },
@@ -328,9 +323,10 @@ const useSalatoDeliveryAPI = (props) => ({
         
     },
 
-    getGrupoProduto:async () => {
+    getGrupoProduto:async (StSite = 1, StPersonalizado = 0) => {
         const json = await apiFetchGet(
-            '/pedidos/getGrupoProduto'
+            '/pedidos/getGrupoProduto',
+            {StSite, StPersonalizado}
         )
         return json;
     },
@@ -343,10 +339,10 @@ const useSalatoDeliveryAPI = (props) => ({
         return json;
     },
 
-    insertCarCompra:async (jwt, hash, IdProduto, QtProduto) => {
+    insertCarCompra:async (jwt, hash, IdProduto, QtProduto,urlImage = '') => {
         const json = await apiFetchPost(
             '/pedidos/InsertCarCompras',
-            {jwt, hash, IdProduto, QtProduto},
+            {jwt, hash, IdProduto, QtProduto,urlImage},
             props
         )
         return json;
@@ -361,10 +357,10 @@ const useSalatoDeliveryAPI = (props) => ({
         return json;
     },
 
-    updateCarCompra:async (jwt, hash, IdProduto, QtProduto) => {
+    updateCarCompra:async (jwt, hash, IdProduto, QtProduto, urlImage = '') => {
         const json = await apiFetchPut(
             '/pedidos/InsertCarCompras',
-            {jwt, hash, IdProduto, QtProduto},
+            {jwt, hash, IdProduto, QtProduto, urlImage},
             props
         )
 
@@ -384,6 +380,8 @@ const useSalatoDeliveryAPI = (props) => ({
         const json = await apiFetchGetEnd(
             'http://cep.republicavirtual.com.br/web_cep.php?cep=' + cep +'&formato=json'
         )
+
+        console.log(json);
         return json;
     },
 
@@ -640,6 +638,20 @@ const useSalatoDeliveryAPI = (props) => ({
         )
         return json;
     },
+
+    addPhoto:async(jwt, hash, uri, filename, type) => {
+
+        const json = await apiFetchFile(
+            'photos/postPhoto',
+            jwt, 
+            hash,
+            uri,
+            filename,
+            type
+        )
+
+        return json;
+    }
     
 });
 
