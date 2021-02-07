@@ -43,7 +43,7 @@ const Preload = (props) => {
             props.navigation.dispatch(StackActions.reset({
                 index:0,
                 actions:[
-                    NavigationActions.navigate({routeName:'PrincipalTabs'})
+                    NavigationActions.navigate({routeName:'Lojas'})
                 ]
             }));
         }

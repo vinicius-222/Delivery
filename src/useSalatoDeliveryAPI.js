@@ -9,6 +9,7 @@ import { MapsAPI } from './config';
 const URL = 'http://138.99.15.234:20003';
 export const BASEAPI = URL+'/backEndSalato/';
 export const BASEAPIIMAGE = URL+'/images/';
+export const IMAGE = BASEAPI +'Images/';
 
 const apiFetchFile = async (endpoint, jwt, hash, uri, filename, type) => {
     /*if (body.jwt){
@@ -576,6 +577,46 @@ const useSalatoDeliveryAPI = (props) => ({
                     altitude:0,
                     heading:0
                 }
+                resolve(loja);
+            },500);
+        })
+    },
+
+    getLojas:async() => {
+        return new Promise((resolve, reject)=>{
+            setTimeout(()=>{
+                const loja = [
+                    {center:{ 
+                        latitude: -22.657147932062127,
+                        longitude:-43.03820516914129
+                    },
+                    nome:'Loja Salato Mage',
+                    endereco:'Praça Dr. Nilo Peçanha, 56',
+                    horarioSemana:'Seg a Sex das 08:00 as 19:00',
+                    horarioSabado:'Sab das 08:00 as 17:00',
+                    telefone:'21 98485-6295',
+                    id:3212,
+                    zoom:14,
+                    pitch:0,
+                    altitude:0,
+                    heading:0
+                    },
+                    {center:{ 
+                        latitude: -22.657147932062127,
+                        longitude:-43.03820516914129
+                    },
+                    nome:'Loja Salato Piabeta',
+                    endereco:'Rua Brasil, 221',
+                    horarioSemana:'Seg a Sex das 08:00 as 19:00',
+                    horarioSabado:'Sab das 08:00 as 17:00',
+                    telefone:'21 98485-6084',
+                    id:342,
+                    zoom:14,
+                    pitch:0,
+                    altitude:0,
+                    heading:0
+                    },
+                ]
                 resolve(loja);
             },500);
         })

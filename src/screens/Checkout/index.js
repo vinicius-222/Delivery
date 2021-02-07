@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useSalatoDeliveryAPI, { BASEAPIIMAGE } from '../../useSalatoDeliveryAPI';
+import useSalatoDeliveryAPI, { BASEAPIIMAGE, IMAGE } from '../../useSalatoDeliveryAPI';
 import { connect } from 'react-redux';
 import {
     Safe,
@@ -102,7 +102,7 @@ const Checkout = (props) =>{
         <Safe>
             <Scroll>
                 <BodyArea>
-                    <BodyImage source={{uri:BASEAPIIMAGE+props.LinkImage}}/>
+                    <BodyImage source={{uri:IMAGE+props.LinkImage}}/>
                     <BodyInfoNmProduto>
                         <BodyNmProduto>{props.NmProduto}</BodyNmProduto>
                     </BodyInfoNmProduto>

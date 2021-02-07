@@ -15,7 +15,7 @@ import {
 } from './styled';
 
 const BASE = BASEAPIIMAGE;
-const Category = (props) =>{
+const SubCategory = (props) =>{
     const api = useSalatoDeliveryAPI(props);
     const [activeCategoria, setActiveCategoria] = useState('Mini-fritos');
     const [listCategoria, setListCategoria] = useState([]);
@@ -28,19 +28,11 @@ const Category = (props) =>{
         props.navigation.navigate('Search',{DsGrupoProduto:i.DsGrupoProduto, IdGrupoProduto:i.IdGrupoProduto});
     }
 
-    const HandleSubCategory = () =>{
-        props.navigation.navigate('SubCategory');
-    }
-
-    const getSubCategoria = async () => {
-        let json = await api.getCategoria(props.jwt, props.hash, 0, 1);
-        props.setListaSubCategoria(json.GrupoProduto);
-    }
 
     useEffect(() =>{
         setProductsInfo(props.ListProductsCategory);
-        setListCategoria(props.ListCategory);
-        getSubCategoria();
+        setListCategoria(props.ListaSubCategoria);
+
     },[])
 
     return(
@@ -58,14 +50,6 @@ const Category = (props) =>{
                                 </HeaderCategoriaAction>
                             </HeaderCategoriaArea>
                         ))}
-                        <HeaderCategoriaArea>
-                            <HeaderCategoriaAction onPress={()=>HandleSubCategory()} underlayColor="transparent">
-                                <HeaderCategoriaItem >
-                                    <HeaderCategoriaImage source={{uri:BASE+'/Categoria/Tortas75b740b36c72dc934cb5b6674143ea2d.jpg'}} />
-                                    <HeaderCategoriaDesc>Bolos Personalizados</HeaderCategoriaDesc>
-                                </HeaderCategoriaItem>
-                            </HeaderCategoriaAction>
-                        </HeaderCategoriaArea>
                     </HeaderCategoria>
                 </HeaderArea>
             </ScrollArea>
@@ -74,9 +58,9 @@ const Category = (props) =>{
 }
 
 
-Category.navigationOptions = (props) =>{
+SubCategory.navigationOptions = (props) =>{
     return{
-        headerTitle:'Categoria',
+        headerTitle:'Personalize',
     }
 }
 const mapStateToProps = (state) => {
@@ -86,7 +70,7 @@ const mapStateToProps = (state) => {
         hash:state.userReducer.hash,
         Endereco:state.carReducer.Endereco,
         ListProductsCategory:state.carReducer.ListProductsCategory,
-        ListCategory:state.carReducer.ListCategory,
+        ListaSubCategoria:state.carReducer.ListaSubCategoria,
     }
 }
  
@@ -104,4 +88,4 @@ const mapDispatchToProps = (dispatch) =>{
         setListaSubCategoria:(ListaSubCategoria)=>dispatch({type:'SET_LISTSUBCATEGORY', payload:{ListaSubCategoria}})
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default connect(mapStateToProps, mapDispatchToProps)(SubCategory);

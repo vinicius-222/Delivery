@@ -25,7 +25,7 @@ const Camera = (props) => {
     
     const getfoto = () => {
         CameraRoll.getPhotos({
-            first:20,
+            first:100,
             assetType:'Photos'
         }).then((r)=>{
             setAlbum(r.edges);   

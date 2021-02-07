@@ -7,7 +7,7 @@ import AddressModal from '../../components/Address/AddressModal';
 import { parseISO, format, formatRelative, formatDistance , parse} from 'date-fns';
 import localeBR from 'date-fns/locale/en-CA';
   
-import useSalatoDeliveryAPI, { BASEAPIIMAGE, BASEAPI } from '../../useSalatoDeliveryAPI';
+import useSalatoDeliveryAPI, { BASEAPIIMAGE, BASEAPI , IMAGE} from '../../useSalatoDeliveryAPI';
 import {
     Safe,
     Container,
@@ -345,7 +345,7 @@ const CarCompra = (props) =>{
                 {props.ListCarCompra.map((i,k) =>(
                     <Container key={i.IdCarrinhoDeCompra}>
                         <BodyHeaderArea>
-                            <HeaderImageProduto source={{uri:BASEAPIIMAGE+i.LinckImage}}/>
+                            <HeaderImageProduto source={{uri:IMAGE+i.LinckImage}}/>
                             <HeaderNomeProduto>{i.NmProduto}</HeaderNomeProduto>
                         </BodyHeaderArea>
                         <BodyArea>

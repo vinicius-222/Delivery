@@ -1,6 +1,6 @@
 import React, { useEffect }from 'react';
 import styled from 'styled-components/native';
-import { BASEAPIIMAGE } from '../useSalatoDeliveryAPI';
+import { BASEAPIIMAGE, IMAGE } from '../useSalatoDeliveryAPI';
 
 const BodyProdutoAction = styled.View`
     flex-direction:row;
@@ -19,11 +19,12 @@ export const BodyAreaDetail = styled.View`
     border:0.5px solid #CCC;
 
 `;
-export const BodyProdutoAreaImage =  styled.View``;
+export const BodyProdutoAreaImage =  styled.View`
+    margin-left:5px;
+`;
 export const BodyProdutoImage = styled.Image`
     height:90px;
     width:90px;
-    resizeMode:contain;
     border-radius:5px;
 `;
 export const BodyProdutoAreaInfo = styled.View`
@@ -69,7 +70,7 @@ const FlatListProducts = (props) =>{
     return(
         <BodyProdutoAction key={props.key} >
             <BodyProdutoAreaImage>
-                <BodyProdutoImage  source={{uri:BASE+props.data.LinckImage}}/>
+                <BodyProdutoImage  source={{uri:IMAGE+props.data.LinckImage}}/>
             </BodyProdutoAreaImage>
             <BodyProdutoAreaInfo>
                 <BodyProdutoName>{props.data.DsTitulo}</BodyProdutoName>
