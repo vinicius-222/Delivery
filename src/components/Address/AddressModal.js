@@ -180,18 +180,11 @@ const AddressModal = (props) => {
 
     //aqui carrega o area de entrega e a posicao atual do mapa
     useEffect(()=> {
-        const getArea = async() => {
-            const area = await api.getAreaEntrega();
-            props.setPolygonCordenates(area);
-        }
 
         const getLocationLoja = async () =>{
             const loja = await api.getLocationLoja();
             props.setMapCameraLocation(loja);
         }
-        
-        getLocationLoja();
-        getArea();
         
     },[])
 
@@ -226,7 +219,6 @@ const AddressModal = (props) => {
         setStUsarGeoLocation(true);
         setModalInsertVisible(true);
         setLocationActual(props.GeoEndereco);
-        console.log(LocationActual);
     }
 
     const DeleteEndereco = (k) =>{
@@ -380,6 +372,8 @@ const mapStateToProps = (state) => {
         GeoEndereco:state.enderecoReducer.GeoEndereco,
         MeusEnderecos:state.enderecoReducer.MeusEnderecos,
         EnderecoAtivo:state.enderecoReducer.EnderecoAtivo,
+        PolygonCordenates:state.enderecoReducer.PolygonCordenates,
+
     }
 }
 

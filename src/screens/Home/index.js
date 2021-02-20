@@ -170,6 +170,7 @@ const mapStateToProps = (state) => {
         ListCarCompra:state.carReducer.ListCarCompra,
         hash:state.userReducer.hash,
         Endereco:state.carReducer.Endereco,
+        mapCameraLocation:state.enderecoReducer.MapCameraLocation
     }
 }
  

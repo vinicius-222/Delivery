@@ -111,7 +111,6 @@ const CarCompra = (props) =>{
         if (!json.error){
             props.setListFormaDePagamento(json.FormaPagamento);
         }
-        console.log(props.ListCarCompra)
     }
 
     const DeleteItem = (i,k) =>{
@@ -198,7 +197,6 @@ const CarCompra = (props) =>{
             urlImageProduto
         );
 
-        console.log(json);
         return json;
     }
 
@@ -224,6 +222,8 @@ const CarCompra = (props) =>{
 
         if (props.ImageProduto != null){
             AdPhoto();
+            setUrlImage(props.ImageProduto.uri);
+            console.log(props.ImageProduto.uri);
         }
     },[props.ImageProduto])
 

@@ -16,7 +16,6 @@ export default {
         height:60px;
         justify-content:center;
         align-items:center;
-
     `,
     LogoImage: styled.Image`
         height:70px;
@@ -36,7 +35,6 @@ export default {
         align-items:flex-start;
         padding:10px;
         border:1px solid #FF0000;
-
     `,
     Titulo: styled.Text`
         color:#000000;

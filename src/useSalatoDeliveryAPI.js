@@ -381,8 +381,6 @@ const useSalatoDeliveryAPI = (props) => ({
         const json = await apiFetchGetEnd(
             'http://cep.republicavirtual.com.br/web_cep.php?cep=' + cep +'&formato=json'
         )
-
-        console.log(json);
         return json;
     },
 
@@ -497,48 +495,92 @@ const useSalatoDeliveryAPI = (props) => ({
     getAreaEntrega:async()=>{
         return new Promise((resolve, reject)=>{
             setTimeout(()=>{
-                const end = [
-                    {
-                        latitude: -22.666489,
-                        longitude: -43.039147
-                    },
-                    {
-                        latitude: -22.671901,
-                        longitude: -43.034527
-                    },
-                    {
-                        latitude: -22.667332, 
-                        longitude: -43.025091
-                    },
-                    {
-                        latitude: -22.661063, 
-                        longitude:-43.024608
-                    },
-                    {
-                        latitude: -22.651241,
-                        longitude:  -43.021947
-                    },
-                    {
-                        latitude: -22.639438, 
-                        longitude: -43.028127
-                    },
-                    {
-                        latitude: -22.638408, 
-                        longitude:  -43.033191
-                    },
-                    {
-                        latitude: -22.646884,
-                        longitude:  -43.043919
-                    },
-                    {
-                        latitude: -22.651399,
-                        longitude:  -43.051601
-                    },
-                    {
-                        latitude:  -22.659558,
-                        longitude:  -43.051430
-                    }, 
-                ]
+                const end = {
+                    LojaMage:[
+                        {
+                            latitude: -22.666489,
+                            longitude: -43.039147
+                        },
+                        {
+                            latitude: -22.671901,
+                            longitude: -43.034527
+                        },
+                        {
+                            latitude: -22.667332, 
+                            longitude: -43.025091
+                        },
+                        {
+                            latitude: -22.661063, 
+                            longitude:-43.024608
+                        },
+                        {
+                            latitude: -22.651241,
+                            longitude:  -43.021947
+                        },
+                        {
+                            latitude: -22.639438, 
+                            longitude: -43.028127
+                        },
+                        {
+                            latitude: -22.638408, 
+                            longitude:  -43.033191
+                        },
+                        {
+                            latitude: -22.646884,
+                            longitude:  -43.043919
+                        },
+                        {
+                            latitude: -22.651399,
+                            longitude:  -43.051601
+                        },
+                        {
+                            latitude:  -22.659558,
+                            longitude:  -43.051430
+                        }, 
+                    ],
+                    LojaPiabeta:[
+                        {
+                            latitude: -22.666489,
+                            longitude: -43.039147
+                        },
+                        {
+                            latitude: -22.671901,
+                            longitude: -43.034527
+                        },
+                        {
+                            latitude: -22.667332, 
+                            longitude: -43.025091
+                        },
+                        {
+                            latitude: -22.661063, 
+                            longitude:-43.024608
+                        },
+                        {
+                            latitude: -22.651241,
+                            longitude:  -43.021947
+                        },
+                        {
+                            latitude: -22.639438, 
+                            longitude: -43.028127
+                        },
+                        {
+                            latitude: -22.638408, 
+                            longitude:  -43.033191
+                        },
+                        {
+                            latitude: -22.646884,
+                            longitude:  -43.043919
+                        },
+                        {
+                            latitude: -22.651399,
+                            longitude:  -43.051601
+                        },
+                        {
+                            latitude:  -22.659558,
+                            longitude:  -43.051430
+                        }, 
+                    ]
+                }
                 resolve (end);
             },500);
         })
@@ -599,11 +641,52 @@ const useSalatoDeliveryAPI = (props) => ({
                     zoom:14,
                     pitch:0,
                     altitude:0,
-                    heading:0
+                    heading:0,
+                    AreaEntrega:[
+                        {
+                            latitude: -22.666489,
+                            longitude: -43.039147
+                        },
+                        {
+                            latitude: -22.671901,
+                            longitude: -43.034527
+                        },
+                        {
+                            latitude: -22.667332, 
+                            longitude: -43.025091
+                        },
+                        {
+                            latitude: -22.661063, 
+                            longitude:-43.024608
+                        },
+                        {
+                            latitude: -22.651241,
+                            longitude:  -43.021947
+                        },
+                        {
+                            latitude: -22.639438, 
+                            longitude: -43.028127
+                        },
+                        {
+                            latitude: -22.638408, 
+                            longitude:  -43.033191
+                        },
+                        {
+                            latitude: -22.646884,
+                            longitude:  -43.043919
+                        },
+                        {
+                            latitude: -22.651399,
+                            longitude:  -43.051601
+                        },
+                        {
+                            latitude:  -22.659558,
+                            longitude:  -43.051430
+                        }]
                     },
                     {center:{ 
-                        latitude: -22.657147932062127,
-                        longitude:-43.03820516914129
+                        latitude: -22.610205176,
+                        longitude:-43.176912895
                     },
                     nome:'Loja Salato Piabeta',
                     endereco:'Rua Brasil, 221',
@@ -614,7 +697,48 @@ const useSalatoDeliveryAPI = (props) => ({
                     zoom:14,
                     pitch:0,
                     altitude:0,
-                    heading:0
+                    heading:0,
+                    AreaEntrega:[
+                        {           
+                            latitude: -22.61670619996208, 
+                            longitude: -43.16899563116147
+                        },
+                        {
+                            latitude: -22.618017064747203, 
+                            longitude: -43.174099034903435
+                        },
+                        {
+                            latitude: -22.61750500967761, 
+                            longitude: -43.18807792341404
+                        },
+                        {
+                            latitude: -22.61004927191269, 
+                            longitude:-43.188721396059776
+                        },
+                        {
+                            latitude: -22.604068003309123, 
+                            longitude:  -43.190918078720465
+                        },
+                        {
+                            latitude:-22.599704790601336, 
+                            longitude:-43.1895201899986
+                        },
+                        {
+                            latitude: -22.594440072848386, 
+                            longitude:-43.181621008254986
+                        },
+                        {
+                            latitude: -22.593479994472325,
+                            longitude: -43.16612224628956
+                        },
+                        {
+                            latitude:-22.607920754650667, 
+                            longitude:-43.159019943379796
+                        },
+                        {
+                            latitude:-22.619121057625406,
+                            longitude: -43.15669478471256
+                        }]
                     },
                 ]
                 resolve(loja);
