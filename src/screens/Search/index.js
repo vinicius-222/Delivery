@@ -13,7 +13,7 @@ import {
 
 const BASE = BASEAPIIMAGE;
 const Search = (props) =>{
-    const api = useSalatoDeliveryAPI();
+    const api = useSalatoDeliveryAPI(props);
     const [activeCategoria, setActiveCategoria] = useState('Mini-fritos');
 
     const [listCategoria, setListCategoria] = useState([]);

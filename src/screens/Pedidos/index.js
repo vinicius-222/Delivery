@@ -17,7 +17,7 @@ import {
 
 
 const Pedidos = (props) => {
-    const API = useSalatoDeliveryAPI();
+    const API = useSalatoDeliveryAPI(props);
     const [pedidoDelivery, setPedidoDelivery] = useState([]);
 
     const formated = (dt) =>{

@@ -1,6 +1,6 @@
 import useSalatoDeliveryAPI from '../useSalatoDeliveryAPI';
 
-const API = useSalatoDeliveryAPI();
+const API = useSalatoDeliveryAPI(props);
 export const getCarCompra =  (jwt) => {
     return(dispatch) =>{
         

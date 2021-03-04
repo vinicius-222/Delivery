@@ -1,20 +1,10 @@
-
-export const SignOut = () => {
+export const SignOut = (props) => {
     
 	return (dispatch) =>{
-		dispatch({
-			type:'SET_JWT',
-				payload:{
-					jwt:''
-				}
-        });
+
+		dispatch({type:'SET_JWT',payload:{jwt:''}});
         
-        dispatch({
-			type:'SET_NAME',
-				payload:{
-					name:''
-				}
-        });
+        dispatch({type:'SET_NAME',payload:{name:''}});
         
         dispatch({type:'SET_HASH',payload:{hash:''}});
 	}

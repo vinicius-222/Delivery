@@ -60,8 +60,15 @@ const Pagamento = (props) =>{
         
         if (!json.error){
             props.setcarCompra([]);
+            props.setImageProduto('');
+
+            props.navigation.dispatch(StackActions.reset({
+                index:0,
+                actions:[
+                    NavigationActions.navigate({routeName:'home'})
+                ]
+            }));
             
-            props.navigation.navigate('Home');
             alert('Pedido enviado com sucesso!!');
         }else{
             alert('Pedido nao enviado!!');
@@ -179,6 +186,7 @@ const mapDispatchToProps = (dispatch) =>{
         setClearJwt:(jwt)=>dispatch({type:'SET_JWT', payload:{jwt}}),
         setEndereco:(Endereco)=>dispatch({type:'SET_ENDERECO', payload:{Endereco}}),
         setQtProdutoCar:(QtProdutoCar)=>dispatch({type:'SET_QTPRODUTOCAR', payload:{QtProdutoCar}}),
+        setImageProduto:(ImageProduto)=>dispatch({type:'SET_IMAGEPRODUTO', payload:{ImageProduto}}),
 
     }
 }

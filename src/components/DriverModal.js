@@ -77,7 +77,7 @@ color:#000;
 `;
 
 export default (props) => {
-    const api = useSalatoDeliveryAPI();
+    const api = useSalatoDeliveryAPI(props);
 
     const [showStars, setShowStars] = useState(false);
 

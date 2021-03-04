@@ -4,6 +4,7 @@ import { SignOut } from './helpers/AuthHandler';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from '@react-native-community/geolocation';
 import { MapsAPI } from './config';
+import { connect } from 'react-redux';
 
 //const URL = 'http://192.168.1.65';
 const URL = 'http://138.99.15.234:20003';
@@ -79,15 +80,7 @@ const apiFetchPost = async (endpoint, body, props) => {
                 NavigationActions.navigate({routeName:'Login'})
             ]
         })); 
-
-        return (dispatch) =>{
-            dispatch({
-                type:'SET_JWT',
-                    payload:{
-                        jwt:''
-                    }
-            });
-        }
+        props.setSignOut();
     }
 
     return json;
@@ -124,23 +117,15 @@ const apiFetchGet = async (endpoint, body = [], props) => {
 
     const res = await fetch(`${BASEAPI+endpoint}?${qs.stringify(body)}`);
     const json = await res.json();
-    
-    if (json.error){
+
+    /*if (json.error){
         props.navigation.dispatch(StackActions.reset({
             index:0,
             actions:[
                 NavigationActions.navigate({routeName:'Login'})
             ]
         })); 
-        return (dispatch) =>{
-            dispatch({
-                type:'SET_JWT',
-                    payload:{
-                        jwt:''
-                    }
-            });
-        }
-    }
+    }*/
     return json;
 }
 const apiFetchGetEnd = async (endpoint, body = []) => {
@@ -150,7 +135,7 @@ const apiFetchGetEnd = async (endpoint, body = []) => {
 
     return json;
 }
-const apiFetchDelete = async (endpoint, body = []) => {
+const apiFetchDelete = async (endpoint, body = [], props) => {
     /*if (body.jwt){
         let jwt = AsyncStorage.getItem('jwt');
         if(jwt) {
@@ -183,14 +168,7 @@ const apiFetchDelete = async (endpoint, body = []) => {
                 NavigationActions.navigate({routeName:'Login'})
             ]
         })); 
-        return (dispatch) =>{
-            dispatch({
-                type:'SET_JWT',
-                    payload:{
-                        jwt:''
-                    }
-            });
-        }
+        props.setSignOut();
     }
     return json;
 }
@@ -225,8 +203,7 @@ const apiFetchPut = async (endpoint, body = [], props) => {
                 NavigationActions.navigate({routeName:'Login'})
             ]
         })); 
-        
-        SignOut();
+       
     }
 
     return json;
@@ -335,7 +312,8 @@ const useSalatoDeliveryAPI = (props) => ({
     senEmail:async (NmPessoa, DsEmail, DsMsg, DsAssunto) => {
         const json = await apiFetchPost(
             '/user/sendemail',
-            {NmPessoa, DsEmail, DsMsg, DsAssunto}
+            {NmPessoa, DsEmail, DsMsg, DsAssunto},
+            props
         )
         return json;
     },
@@ -436,7 +414,8 @@ const useSalatoDeliveryAPI = (props) => ({
     deleteEndereco:async (jwt, IdEndereco, hash) => {
         const json = await apiFetchDelete(
             '/user/delEndereco',
-            {jwt, IdEndereco, hash}
+            {jwt, IdEndereco, hash},
+            props
         )
         return json;
     },
@@ -624,127 +603,15 @@ const useSalatoDeliveryAPI = (props) => ({
         })
     },
 
-    getLojas:async() => {
-        return new Promise((resolve, reject)=>{
-            setTimeout(()=>{
-                const loja = [
-                    {center:{ 
-                        latitude: -22.657147932062127,
-                        longitude:-43.03820516914129
-                    },
-                    nome:'Loja Salato Mage',
-                    endereco:'Praça Dr. Nilo Peçanha, 56',
-                    horarioSemana:'Seg a Sex das 08:00 as 19:00',
-                    horarioSabado:'Sab das 08:00 as 17:00',
-                    telefone:'21 98485-6295',
-                    id:3212,
-                    zoom:14,
-                    pitch:0,
-                    altitude:0,
-                    heading:0,
-                    AreaEntrega:[
-                        {
-                            latitude: -22.666489,
-                            longitude: -43.039147
-                        },
-                        {
-                            latitude: -22.671901,
-                            longitude: -43.034527
-                        },
-                        {
-                            latitude: -22.667332, 
-                            longitude: -43.025091
-                        },
-                        {
-                            latitude: -22.661063, 
-                            longitude:-43.024608
-                        },
-                        {
-                            latitude: -22.651241,
-                            longitude:  -43.021947
-                        },
-                        {
-                            latitude: -22.639438, 
-                            longitude: -43.028127
-                        },
-                        {
-                            latitude: -22.638408, 
-                            longitude:  -43.033191
-                        },
-                        {
-                            latitude: -22.646884,
-                            longitude:  -43.043919
-                        },
-                        {
-                            latitude: -22.651399,
-                            longitude:  -43.051601
-                        },
-                        {
-                            latitude:  -22.659558,
-                            longitude:  -43.051430
-                        }]
-                    },
-                    {center:{ 
-                        latitude: -22.610205176,
-                        longitude:-43.176912895
-                    },
-                    nome:'Loja Salato Piabeta',
-                    endereco:'Rua Brasil, 221',
-                    horarioSemana:'Seg a Sex das 08:00 as 19:00',
-                    horarioSabado:'Sab das 08:00 as 17:00',
-                    telefone:'21 98485-6084',
-                    id:342,
-                    zoom:14,
-                    pitch:0,
-                    altitude:0,
-                    heading:0,
-                    AreaEntrega:[
-                        {           
-                            latitude: -22.61670619996208, 
-                            longitude: -43.16899563116147
-                        },
-                        {
-                            latitude: -22.618017064747203, 
-                            longitude: -43.174099034903435
-                        },
-                        {
-                            latitude: -22.61750500967761, 
-                            longitude: -43.18807792341404
-                        },
-                        {
-                            latitude: -22.61004927191269, 
-                            longitude:-43.188721396059776
-                        },
-                        {
-                            latitude: -22.604068003309123, 
-                            longitude:  -43.190918078720465
-                        },
-                        {
-                            latitude:-22.599704790601336, 
-                            longitude:-43.1895201899986
-                        },
-                        {
-                            latitude: -22.594440072848386, 
-                            longitude:-43.181621008254986
-                        },
-                        {
-                            latitude: -22.593479994472325,
-                            longitude: -43.16612224628956
-                        },
-                        {
-                            latitude:-22.607920754650667, 
-                            longitude:-43.159019943379796
-                        },
-                        {
-                            latitude:-22.619121057625406,
-                            longitude: -43.15669478471256
-                        }]
-                    },
-                ]
-                resolve(loja);
-            },500);
-        })
-    },
+    getLojas:async(jwt, hash) => {
+        const json = await apiFetchGet(
+            '/pedidos/getInfoLojas',
+            {jwt, hash},
+            props
+        );
+
+        return json;
+    },            
     
     sendPedidoDeVenda:async(IdPedidoDeVenda, CdChamada, DtPedido, DtEntrega, IdEmpresa, VlPedido,TpPedido, IdCondicaoPagamento, VlTotalPedido,itensPedido, DsObservacao, jwt) => {
         const json = await apiFetchPost(
@@ -799,13 +666,13 @@ const useSalatoDeliveryAPI = (props) => ({
     insertRecuperaSenha:async(email) => {
         const json = await apiFetchPost(
             '/user/handleRecuperaSenha',
-            {email}
+            {email},
+            props
         )
         return json;
     },
 
     addPhoto:async(jwt, hash, uri, filename, type) => {
-
         const json = await apiFetchFile(
             'photos/postPhoto',
             jwt, 
@@ -814,10 +681,40 @@ const useSalatoDeliveryAPI = (props) => ({
             filename,
             type
         )
+        return json;
+    },
 
+    getUrlImage:async(jwt, hash)=>{
+        const json = await apiFetchGet(
+            '/photos/geturlImage',
+            {jwt, hash},
+            props
+        )
+        return json;
+    },
+
+    deleteUrlImage:async(jwt, hash)=>{
+        const json = await apiFetchDelete(
+            '/photos/geturlImage',
+            {jwt, hash},
+            props
+        )
         return json;
     }
-    
 });
+
+const mapStateToProps = (state) => {
+    return{
+
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        setJwt:(jwt)=>dispatch({type:'SET_JWT', payload:{jwt}}),
+        setName:(name)=>dispatch({type:'SET_NAME', payload:{name}}),
+        setHash:(hash)=>dispatch({type:'SET_HASH', payload:{hash}}),
+    }
+}
 
 export default useSalatoDeliveryAPI;

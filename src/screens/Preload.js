@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import styled from 'styled-components/native';
 import Loading from  '../components/Loading';
+import { SignOut } from '../helpers/AuthHandler';
 import useSalatoDeliveryAPI from '../useSalatoDeliveryAPI';
 
 const Container = styled.View`
@@ -28,9 +29,12 @@ const TextLoading = styled.Text`
 `;
 
 const Preload = (props) => {
-    const API = useSalatoDeliveryAPI();
+    const API = useSalatoDeliveryAPI(props);
+    const [jwt, setJwt] = useState('');
+
     const VerificaLogin = () =>{
-        if(!props.jwt) {
+        console.log(jwt)
+        if(!jwt) {
             // LOGIN
             props.navigation.dispatch(StackActions.reset({
                 index:0,
@@ -69,12 +73,44 @@ const Preload = (props) => {
         }
     }
 
+    const getLojas = async () =>{
+        const json = await API.getLojas(
+            props.jwt,
+            props.hash
+        )
+        return json;
+    }
+
+    const vLogin = () => {
+        return new Promise((r,j) => {
+            let json = getLojas();
+            r(json);
+        })
+    }
+
+    useEffect(()=>{ 
+        const lLogin = () => {
+            vLogin().then((json)=>{
+                if(json.error){
+                    setJwt('');
+                    console.log('com erro')
+                    VerificaLogin();
+                }else{
+                    console.log('sem erro')
+                    setJwt(props.jwt);
+                    props.setInfoLojas(json.Lojas);  
+                    
+                }
+            })
+        }
+        lLogin()
+    },[])
+
     useEffect(()=>{
-        setTimeout(() => {
-            VerificaLogin();
-        }, 500);
-        
-    })
+        if (jwt){
+            VerificaLogin(); 
+        }
+    },[jwt])
 
     return(
         <Container>
@@ -92,7 +128,8 @@ const Preload = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        jwt:state.userReducer.jwt 
+        jwt:state.userReducer.jwt,
+        hash:state.userReducer.hash 
     };
 }
 
@@ -111,6 +148,8 @@ const mapDispatchToProps = (dispatch) => {
         setNmCategoria:(NmCategoria)=>dispatch({type:'SET_NMCATEGORIA', payload:{NmCategoria}}),
         setIdategoria:(IdCategoria)=>dispatch({type:'SET_IDCATEGORIA', payload:{IdCategoria}}),
         setInfoUsuario:(infoUsuario)=>dispatch({type:'SET_INFOUSUARIO', payload:{infoUsuario}}),
+        setInfoLojas:(infoLojas)=>dispatch({type:'SET_INFOLOJAS', payload:{infoLojas}}),
+        setSignOut:()=>dispatch(SignOut()),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Preload);

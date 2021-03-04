@@ -70,7 +70,7 @@ const TextDetail = styled.Text``;
 
 
 const MapAddress = (props) => {
-    const api = useSalatoDeliveryAPI();
+    const api = useSalatoDeliveryAPI(props);
     const map = useRef();
     const [polygon, setPoygon]  = useState(props.PolygonCordenates);
     const [toLoc, setToLoc] = useState({

@@ -58,7 +58,7 @@ const ButtonText = styled.Text`
 
 
 const EditModal = (props) => {
-    const api = useSalatoDeliveryAPI();
+    const api = useSalatoDeliveryAPI(props);
     const [modalEditVisible, setModalEditVisible] = useState(false);
     
     const handleCloseAction = () =>{

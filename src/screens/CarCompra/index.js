@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import Loading from '../../components/Loading';
 import BalonCaution from '../../components/BalonCaution';
+import { SignOut } from '../../helpers/AuthHandler';
 import DatePicker from 'react-native-datepicker';
 import AddressModal from '../../components/Address/AddressModal';
 import { parseISO, format, formatRelative, formatDistance , parse} from 'date-fns';
@@ -208,9 +209,33 @@ const CarCompra = (props) =>{
             props.ImageProduto.filename,
             props.ImageProduto.type
         )
+       getImage();
+    }
 
-        setUrlImage(BASEAPI+'Images/'+json.retorno)
+    const getImage = async () => {
+        const json = await api.getUrlImage(
+            props.jwt,
+            props.hash
+        )
 
+        if (!json.error){
+            setUrlImage(BASEAPI+'Images/'+ json.urlImage);
+            props.setImageProduto(BASEAPI+'Images/'+ json.urlImage);
+            console.log(BASEAPI+'Images/'+ json.urlImage);
+            console.log(props.hash);
+        }
+
+        
+    }
+
+    const handleDeleteIMG = async () =>{
+        const json = await api.deleteUrlImage(
+            props.jwt,
+            props.hash
+        )
+        props.setImageProduto(null);
+
+        return json;
     }
     
     useEffect(()=>{
@@ -219,11 +244,8 @@ const CarCompra = (props) =>{
     },[props.ListCarCompra]);
 
     useEffect(() => {
-
         if (props.ImageProduto != null){
             AdPhoto();
-            setUrlImage(props.ImageProduto.uri);
-            console.log(props.ImageProduto.uri);
         }
     },[props.ImageProduto])
 
@@ -246,13 +268,14 @@ const CarCompra = (props) =>{
         },1000)
 
     },[CEPEndereco])
-
+ 
     useEffect(() =>{
         props.setTpEntrega(activeButton);
     },[activeButton])
 
     useEffect(() => {
         getFormadePagamento();
+        getImage();
     },[])
 
 
@@ -377,7 +400,7 @@ const CarCompra = (props) =>{
                         </>
                     </BottonCamera>
                     {props.ImageProduto ? 
-                        <ButtonDelImage onPress={()=>props.setImageProduto('')}>
+                        <ButtonDelImage onPress={()=>handleDeleteIMG()}>
                                 <ButtonTrashImage source={require('../../assets/images/trash.png')}/>
                         </ButtonDelImage>
                     :<ButtonTrashImage />}
@@ -440,7 +463,8 @@ const mapDispatchToProps = (dispatch) =>{
         setVlTotalProduto:(VlTotalProduto)=>dispatch({type:'SET_VLTOTALPRODUTOS', payload:{VlTotalProduto}}),
         setListFormaDePagamento:(ListFormaDePagamento)=>dispatch({type:'SET_LISTFORMADEPAGAMENTO', payload:{ListFormaDePagamento}}),
         setVisibleBalon:(visibleBalon)=>dispatch({type:'SET_VISIBLEBALON', payload:{visibleBalon}}),
-        setImageProduto:(ImageProduto)=>dispatch({type:'SET_IMAGEPRODUTO', payload:{ImageProduto}})
+        setImageProduto:(ImageProduto)=>dispatch({type:'SET_IMAGEPRODUTO', payload:{ImageProduto}}),
+        setSignOut:()=>dispatch(SignOut())
 
     }
 }

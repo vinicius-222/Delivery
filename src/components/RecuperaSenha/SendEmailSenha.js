@@ -87,7 +87,7 @@ const EmailInput = styled.TextInput`
 
 
 const SendEmailSenha = (props) => {
-    const API = useSalatoDeliveryAPI();
+    const API = useSalatoDeliveryAPI(props);
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
 

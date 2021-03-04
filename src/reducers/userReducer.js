@@ -3,6 +3,7 @@ const initialState = {
     name:'',
     hash:'',
     infoUsuario:[],
+    infoLojas:[]
 };
 
 export default (state = initialState, action) => {
@@ -48,6 +49,9 @@ export default (state = initialState, action) => {
             break;*/
         case 'SET_INFOUSUARIO':
             return{...state, infoUsuario:action.payload.infoUsuario};
+            break;
+        case 'SET_INFOLOJAS':
+            return{...state, infoLojas:action.payload.infoLojas};
             break;
     }
    

@@ -33,7 +33,7 @@ import {
 
 const Page = (props) => {
     const map = useRef();
-    const api = useSalatoDeliveryAPI();
+    const api = useSalatoDeliveryAPI(props);
     const { width, height } = Dimensions.get('window');
     const ASPECT_RATIO = width / height;
     const [polygon, setPoygon]  = useState([
