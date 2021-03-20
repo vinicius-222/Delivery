@@ -218,10 +218,11 @@ const CarCompra = (props) =>{
             props.hash
         )
 
-        if (!json.error){
-            setUrlImage(BASEAPI+'Images/'+ json.urlImage);
-            props.setImageProduto(BASEAPI+'Images/'+ json.urlImage);
-            console.log(BASEAPI+'Images/'+ json.urlImage);
+        if (json.retorno.urlImage){
+            let imgPhoto = BASEAPI+'Images/'+ json.retorno.urlImage;
+            setUrlImage(imgPhoto);
+            props.setImageProduto(imgPhoto);
+            console.log(imgPhoto);
             console.log(props.hash);
         }
 

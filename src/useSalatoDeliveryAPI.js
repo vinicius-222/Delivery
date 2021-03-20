@@ -6,8 +6,8 @@ import Geolocation from '@react-native-community/geolocation';
 import { MapsAPI } from './config';
 import { connect } from 'react-redux';
 
-//const URL = 'http://192.168.1.65';
-const URL = 'http://138.99.15.234:20003';
+const URL = 'http://192.168.1.65';
+//const URL = 'http://138.99.15.234:20003';
 export const BASEAPI = URL+'/backEndSalato/';
 export const BASEAPIIMAGE = URL+'/images/';
 export const IMAGE = BASEAPI +'Images/';
